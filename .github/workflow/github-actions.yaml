@@ -3,12 +3,12 @@ name: "Continuous Integration Payment API"
 on:
   push:
     branches:
-      - "Payment_API"
+      - "Project-PaymentAPI"
   pull_request:
     push:
       branches:
         - "main"
-        
+
 #      on:
 #        schedule:
 #          - cron: "0 2 * * 1-5"
