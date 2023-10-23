@@ -150,4 +150,7 @@ CRITICAL | 2023-10-17, 08:44:52 > Not found. | [] []
  CRITICAL | 2023-10-18, 10:25:46 > An exception occurred while executing a query: SQLSTATE[23000]: Integrity constraint violation: 1048 Column 'customer_id' cannot be null | [] []
  CRITICAL | 2023-10-18, 10:33:19 > An exception occurred while executing a query: SQLSTATE[23000]: Integrity constraint violation: 1048 Column 'basket_id' cannot be null | [] []
  CRITICAL | 2023-10-19, 14:53:02 > An exception occurred while executing a query: SQLSTATE[23000]: Integrity constraint violation: 1048 Column 'jwt' cannot be null | [] []
+ CRITICAL | 2023-10-23, 16:16:02 > An exception occurred in the driver: SQLSTATE[HY000] [2002] php_network_getaddresses: getaddrinfo for payment_api_mariadb failed: Name or service not known | [] []
+ CRITICAL | 2023-10-23, 16:17:10 > An exception occurred in the driver: SQLSTATE[HY000] [2002] php_network_getaddresses: getaddrinfo for payment_api_mariadb failed: Name or service not known | [] []
+ CRITICAL | 2023-10-23, 16:22:34 > No payment method found | {"type":"/errors/no_payment method_found","title":"List of payment method","status":404,"detail":0,"instance":"/v1/payment method","records":[]} []
  

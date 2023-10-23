@@ -159,4 +159,7 @@ CRITICAL | 2023-10-17, 08:44:52 > Not found. | [] []
  INFO | 2023-10-19, 13:40:39 > Access denied! | {"type":"/errors/Unauthorized_!_Please_login_or_register_first.","title":"Unauthorized! Please login or register first.","status":401,"detail":"","instance":"/v1/user/login"} []
  CRITICAL | 2023-10-19, 14:53:02 > An exception occurred while executing a query: SQLSTATE[23000]: Integrity constraint violation: 1048 Column 'jwt' cannot be null | [] []
  INFO | 2023-10-20, 15:42:23 > The name already exists | {"type":"name_already_exists","title":"A payment method with the same name already exists.","status":409,"detail":"","instance":"/v1/payment method"} []
+ CRITICAL | 2023-10-23, 16:16:02 > An exception occurred in the driver: SQLSTATE[HY000] [2002] php_network_getaddresses: getaddrinfo for payment_api_mariadb failed: Name or service not known | [] []
+ CRITICAL | 2023-10-23, 16:17:10 > An exception occurred in the driver: SQLSTATE[HY000] [2002] php_network_getaddresses: getaddrinfo for payment_api_mariadb failed: Name or service not known | [] []
+ CRITICAL | 2023-10-23, 16:22:34 > No payment method found | {"type":"/errors/no_payment method_found","title":"List of payment method","status":404,"detail":0,"instance":"/v1/payment method","records":[]} []
  

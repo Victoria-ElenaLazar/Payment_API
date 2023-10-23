@@ -1,5 +1,6 @@
 <?php
 declare(strict_types=1);
+//die("something is wrong");
 global $container;
 
 use Dotenv\Dotenv;
@@ -18,7 +19,6 @@ $dotenv->safeLoad();
 
 $app = AppFactory::create(container: $container);
 
-
 $app->group('/v1/user', function (RouteCollectorProxy $group) {
     $group->post('/registration', '\PaymentApi\Controllers\Users\UsersController:registration');
     $group->get('/apidocs', '\PaymentApi\Controllers\OpenAPIController:documentationAction');
@@ -33,8 +33,7 @@ $app->group('/v1/payment-method', function (RouteCollectorProxy $group) {
     $group->delete('/{id:[0-9]+}', '\PaymentApi\Controllers\PaymentMethods\DeletePaymentMethodController:deleteAction');
     $group->get('/apidocs', '\PaymentApi\Controllers\OpenAPIController:documentationAction');
 
-});
-//->add(new BeforeMiddleware($container));
+})->add(new BeforeMiddleware($container));
 
 $app->group('/v1/customer', function (RouteCollectorProxy $group) {
     $group->get('', '\PaymentApi\Controllers\Customers\CustomersController:indexAction');
