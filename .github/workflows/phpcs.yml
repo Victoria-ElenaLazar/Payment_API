@@ -1,4 +1,5 @@
 name: "Continuous Integration Payment API"
+
 on:
   push:
     branches:
@@ -8,11 +9,12 @@ on:
 jobs:
   phpcs:
     runs-on: "ubuntu-latest"
+
     steps:
       - name: "Check out code"
         uses: "actions/checkout@v2"
         with:
-          fetch-depth: "0"
+          fetch-depth: 0
 
       - name: "Install PHP_CodeSniffer"
         run: "|
