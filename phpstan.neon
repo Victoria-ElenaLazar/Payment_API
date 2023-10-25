@@ -1,5 +1,10 @@
-parameters:
+includes:
+ - vendor/phpstan/phpstan/conf/level.neon
+ - vendor/phpstan/phpstan/conf/bleedingEdge.neon
+
+   parameters:
     level: 5
-    checkGenericClassInNonGenericObjectType: false
+
     paths:
-        - src
+    - src
+    - tests
