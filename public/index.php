@@ -1,6 +1,6 @@
 <?php
 declare(strict_types=1);
-//die("something is wrong");
+error_log("Message");
 global $container;
 
 use Dotenv\Dotenv;
@@ -44,7 +44,7 @@ $app->group('/v1/customer', function (RouteCollectorProxy $group) {
     $group->delete('/{id:[0-9]+}', '\PaymentApi\Controllers\Customers\DeleteCustomerController:deleteAction');
     $group->get('/apidocs', '\PaymentApi\Controllers\OpenAPIController:documentationAction');
 
-});
+})->add(new BeforeMiddleware($container));
 
 $app->group('/v1/transaction', function (RouteCollectorProxy $group) {
     $group->get('', '\PaymentApi\Controllers\Transactions\TransactionsController:indexAction');
@@ -55,7 +55,8 @@ $app->group('/v1/transaction', function (RouteCollectorProxy $group) {
     $group->delete('/{id:[0-9]+}', '\PaymentApi\Controllers\Transactions\DeleteTransactionController:deleteAction');
     $group->get('/apidocs', '\PaymentApi\Controllers\OpenAPIController:documentationAction');
 
-});
+})->add(new BeforeMiddleware($container));
+
 $app->group('/v1/basket', function (RouteCollectorProxy $group) {
     $group->get('', '\PaymentApi\Controllers\Basket\BasketController:indexAction');
     $group->get('/{id:[0-9]+}', '\PaymentApi\Controllers\Basket\BasketController:getAction');
@@ -66,13 +67,13 @@ $app->group('/v1/basket', function (RouteCollectorProxy $group) {
     $group->delete('/{id:[0-9]+}', '\PaymentApi\Controllers\Basket\DeleteBasketController:deleteAction');
     $group->get('/apidocs', '\PaymentApi\Controllers\OpenAPIController:documentationAction');
 
-});
+})->add(new BeforeMiddleware($container));
 
 
 $displayErrors = $_ENV['APP_ENV'] != 'production';
 
 
-    $customErrorHandler = new CustomErrorHandler($app);
+$customErrorHandler = new CustomErrorHandler($app);
 
 
 $errorMiddleware = $app->addErrorMiddleware(true, true, true);

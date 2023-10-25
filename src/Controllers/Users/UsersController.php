@@ -4,6 +4,7 @@ declare(strict_types=1);
 namespace PaymentApi\Controllers\Users;
 
 use Firebase\JWT\JWT;
+use PaymentApi\Exceptions\ValidationException;
 use PaymentApi\Models\Users;
 use PaymentApi\Routes\Routes;
 use Psr\Container\ContainerInterface;
@@ -84,34 +85,47 @@ class UsersController extends A_Controller
      * @param Response $response
      * @param $args
      * @return Response
+     * @throws ValidationException
      */
-        public function registration(Request $request, Response $response, $args): ResponseInterface
+    public function registration(Request $request, Response $response, $args): ResponseInterface
     {
         $requestBody = json_decode($request->getBody()->getContents(), true);
 
-        if (empty($requestBody)
-            || !isset($requestBody['name'])
-            || !isset($requestBody['address'])
-            || !isset($requestBody['email'])
-            || !isset($requestBody['birthday'])
-            || !isset($requestBody['password'])) {
+        $validationErrors = [];
 
-            $context = [
-                'type' => '/errors/upon_user_create',
-                'title' => 'Invalid request data: name, email, or password is missing.',
-                'status' => 404,
-                'detail' => $this->model,
-                'instance' => '/v1/user/registration'
-            ];
-            $this->logger->info('Invalid request', $context);
-            return new JsonResponse($context, 400);
+        if (empty($requestBody)) {
+            $validationErrors['message'] = 'Request body is empty';
+        } else {
+            $name = filter_var($requestBody['name'], FILTER_SANITIZE_FULL_SPECIAL_CHARS);
+            $address = filter_var($requestBody['address'], FILTER_SANITIZE_FULL_SPECIAL_CHARS);
+            $email = filter_var($requestBody['email'], FILTER_VALIDATE_EMAIL);
+            $birthDate = filter_var($requestBody['birthday'], FILTER_SANITIZE_FULL_SPECIAL_CHARS);
+            $password = filter_var($requestBody['password'], FILTER_SANITIZE_FULL_SPECIAL_CHARS);
+
+            if (empty($name)) {
+                $validationErrors['name'] = 'Name is required and should not be empty';
+            }
+
+            if (empty($address)) {
+                $validationErrors['address'] = 'Address is required and should not be empty';
+            }
+
+            if (empty($email)) {
+                $validationErrors['email'] = 'Email is required and should be a valid email address';
+            }
+
+            if (empty($birthDate)) {
+                $validationErrors['birthday'] = 'Birthday is required and should be a valid email address';
+            }
+
+            if (empty($password)) {
+                $validationErrors['password'] = 'Password is required';
+            }
         }
 
-        $name = filter_var($requestBody['name'], FILTER_SANITIZE_FULL_SPECIAL_CHARS);
-        $address = filter_var($requestBody['address'], FILTER_SANITIZE_FULL_SPECIAL_CHARS);
-        $email = filter_var($requestBody['email'], FILTER_VALIDATE_EMAIL);
-        $birthDate = filter_var($requestBody['birthday'], FILTER_SANITIZE_FULL_SPECIAL_CHARS);
-        $password = filter_var($requestBody['password'], FILTER_SANITIZE_FULL_SPECIAL_CHARS);
+        if (!empty($validationErrors)) {
+            throw new ValidationException('Validation failed', 400, null, $validationErrors);
+        }
 
         $this->model = new Users();
         $this->model->setName($name);
@@ -149,6 +163,7 @@ class UsersController extends A_Controller
             'jwt' => $jwt,
         ], 201);
     }
+
     private function generateJWT(string $email, string $password): string
     {
         $algorithm = 'HS256';

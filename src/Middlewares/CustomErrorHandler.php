@@ -3,11 +3,12 @@ declare(strict_types=1);
 
 namespace PaymentApi\Middlewares;
 
+use PaymentApi\Exceptions\DBException;
 use Slim\App;
+use Exception;
 use Throwable;
 use Monolog\Logger;
 use Psr\Log\LoggerInterface;
-use PaymentApi\Exceptions\A_Exception;
 use Psr\Http\Message\ResponseInterface;
 use Doctrine\ORM\Exception\ORMException;
 use Slim\Exception\HttpNotFoundException;
@@ -37,6 +38,7 @@ final class CustomErrorHandler
      * @param bool $logErrorDetails
      * @param LoggerInterface|null $logger
      * @return ResponseInterface
+     * @throws DBException
      */
     public function __invoke(
         Request          $request,
@@ -51,10 +53,10 @@ final class CustomErrorHandler
         if ($exception instanceof ORMException
             || $exception instanceof HttpNotFoundException
             || $exception instanceof \PDOException) {
-            $this->logger->critical($exception->getMessage());
+            $this->logger->critical(new DBException('Database Exception: An error occurred while processing your command', 500));
             $statusCode = 500;
-        } else if ($exception instanceof A_Exception) {
-            $this->logger->alert($exception->getMessage());
+        } else if ($exception instanceof Exception) {
+            $this->logger->info($exception->getMessage());
             $statusCode = $exception->getCode();
         }
 

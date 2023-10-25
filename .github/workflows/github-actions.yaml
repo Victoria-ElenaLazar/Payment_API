@@ -9,9 +9,9 @@ on:
       branches:
         - "main"
 
-#      on:
-#        schedule:
-#          - cron: "0 2 * * 1-5"
+      on:
+        schedule:
+          - cron: "0 2 * * 1-5"
 jobs:
   phpunit:
     name: "PhpUnit tests"
@@ -49,36 +49,7 @@ jobs:
       - name: "Install Composer Dependencies"
         run: "composer install"
 
-  build:
-    name: "Docker build"
-    runs-on: ${{ matrix.operating-system }}
 
-    strategy:
-      matrix:
-        dependencies:
-          - "locked"
-        php-version:
-          - "8.1"
-          - "8.2"
-        operating-system:
-          - "ubuntu-latest"
-          - "windows-latest"
-    steps:
-      - name: "Checkout"
-        uses: "actions/checkout@v3"
-
-      - name: "Install composer dependencies"
-        working-directory: "./application"
-        run: "composer install --prefer-dist"
-
-      - name: "Run tests"
-        working-directory: "./application"
-        run: "composer run-phpunit"
-      - run: "docker build --target app -t vlazar509/php-composer:1.1 -f ./php/Dockerfile ."
-      - run: "docker build -t vlazar509/nginx-php:1.0 -f ./nginx/Dockerfile"
-      - run: "docker login -u ${{ secrets.DOCKER_USERNAME }} -p ${{ DOCKER_PASSWORD }}"
-      - run: "docker push vlazar509/php-composer:1.1"
-      - run: "docker push vlzar509/nginx-php:1.0"
 
 
 
