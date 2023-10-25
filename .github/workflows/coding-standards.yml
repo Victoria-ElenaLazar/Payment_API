@@ -1,0 +1,25 @@
+name: "Magento 2 Coding Standard"
+on:
+  push:
+    branches:
+      - "main"
+  pull_request:
+    branches:
+      - "Project-PaymentAPI"
+
+jobs:
+  coding-standard:
+    runs-on: "ubuntu-latest"
+    steps:
+      - name: "Checkout code"
+        uses: "actions/checkout@v2"
+        with:
+          fetch-depth: "0"
+
+      - name: "Setup PHP with composer"
+        uses: "shivammathur/setup-php@v2"
+        with:
+          php-version: "8.2"
+          extensions: "mbstring, curl, json, iconv, intl, zip"
+          composer-args: "install --no-progress --no-suggest"
+
