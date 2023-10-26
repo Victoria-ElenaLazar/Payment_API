@@ -1,10 +1,10 @@
 name: "Continuous Integration-Payment API"
 
 on:
-  pull_request:
   push:
     branches:
       - "Project-Payment_API"
+      - "main"
 
 jobs:
   phpunit:
