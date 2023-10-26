@@ -5,7 +5,7 @@
 [![Code Coverage](https://img.shields.io/badge/Coverage-100%25-yellowgreen)](URL)
 [![Version](https://img.shields.io/badge/Version-1.0-blue)](URL)
 
-This is a brief description of my project.
+
 
 
 Welcome to the API Slim Framework-Payment API documentation!
