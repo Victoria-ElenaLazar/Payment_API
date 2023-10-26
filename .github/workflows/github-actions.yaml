@@ -40,7 +40,7 @@ jobs:
           dependency-versions: "${{ matrix.dependencies }}"
 
       - name: "Tests"
-        run: "vendor/bin/phpunit test/ --colors"
+        run: "vendor/bin/phpunit Tests/ --colors"
 
   static-analysis-phpstan:
     name: "Static Analysis by PHPStan"
