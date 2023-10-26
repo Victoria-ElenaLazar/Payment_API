@@ -3,7 +3,7 @@ name: "Continuous Integration-Payment API"
 on:
   push:
     branches:
-      - "Project-Payment_API"
+      - "Project-PaymentAPI"
       - "main"
 
 jobs:
