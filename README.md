@@ -29,6 +29,8 @@ This project helped me to learn and understand how to create and use a REST API 
 
 -[Examples](#examples)
 
+-[Project Demo](#project-demo)
+
 ## [Requirements](#requirements)
 
 - PHP 8.2
@@ -160,5 +162,12 @@ Content-Type: application/json
 DELETE /v1/basket/{id}
 
 ```
+
+## Project Demo
+
+
+[Watch the video](public/payment-api)
+
+Or [download the video](public/payment-api) to watch it.
 
 
