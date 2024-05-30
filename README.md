@@ -166,8 +166,8 @@ DELETE /v1/basket/{id}
 ## Project Demo
 
 
-[Watch the video](public/payment-api)
+[Watch the video](public/payment-api.mov)
 
-Or [download the video](public/payment-api) to watch it.
+Or [download the video](public/payment-api.mov) to watch it.
 
 
